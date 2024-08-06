@@ -1,0 +1,98 @@
+nQuantidadeDiaMes :=
+
+dAtual := Date()
+dNascimento := CToD('')
+dDiaNascimento := Day(dNascimento)
+dMesNascimento := Month(dNascimento)
+dDiaAtual := Day(dAtual)
+dMesAtual := Month(dAtual)
+
+
+/*------------------------------ TEMPO PARA O PROXIMO ANIVERSARIO ------------------------------*/
+
+dDiaAniversario := dDiaNascimento - dDiaAtual
+dMesAniversario := dMesNascimento - dMesAtual
+
+// 20/09 nascimento
+// 24/07 atual 
+//   -4/2     -> 1 meses e 27 dias 
+
+IF dDiaAniversario < 0 .and. dMesAniversario > 0
+	dMesAniversario -= 1
+	dDiaAniversarioo := nQuantidadeDiaMes - (dDiaAniversario*(-1))
+ENDIF
+
+
+// 20/05 nascimento
+// 24/07 atual
+//   -4/-2   -> 10 meses e 27  dias
+
+IF dDiaAniversario < 0 .and. dMesAniversario < 0
+	dMesAniversario := 12 -(dMesAniversario*(-1))
+	dDiaAniversario := nQuantidadeDiaMes - (dDiaAniversario*(-1))
+ENDIF
+
+
+// 30/05 nascimento
+// 24/07 atual
+//  6/-2     -> 10 meses e 6 dias
+
+IF dMesNascimento < 0
+	dMesNascimento := 12 -(dMesNascimento*(-1))
+ENDIF
+
+// 25/07
+// 24/07
+//  1/ 0
+
+/*---------------------------- IDADE EM ANOS, MESES E DIAS ---------------------------------*/
+
+dIdade := dAtual - dNascimento
+
+dIdadeDia := dDiaAtual - dDiaNascimento
+dIdadeMes := dMesAtual - dMesNascimento
+dIdadeAno := dAnoAtual - dAnoNascimento
+
+// 24/07/2023 atual
+// 20/09/1996 nascimento
+//___________
+// 04/-02/27    27 anos -2 meses e 4 dias  -> correto: 26 anos 10 meses e 4 dias
+
+IF dIdadeMes < 0
+	dIdadeAno -= 1
+	dIdadeMes := 12 - (dIdadeMes*(-1))
+ENDIF
+
+// 19/07/2023 atual
+// 20/09/1996 nascimento
+// __________
+// -01/-02/27   27 anos -2 meses e -1 dias  -> correto: 26 anos 10 meses e 30 dias
+
+IF dIdadeDia < 0 .and. dIdadeMes < 0 
+	dIdadeAno -= 1
+	dIdadeDia := dQuantidadeDiaMes - (dIdadeDia*(-1))
+	dIdadeMes := 12 - (dIdadeMes*(-1))
+ENDIF
+
+
+// 10/09/2023 atual
+// 20/09/1996 nascimento
+// ___________
+// -10/00/27   27 anos 0 meses e 10 dias    -> correto: 26 anos 11 meses e 20 dias
+
+IF dIdadeDia < 0
+	dIdadeAno -= 1
+	dIdadeDia := nQuantidadeDiaMes - (dIdadeDia*(-1))
+	dIdadeMes := 12 - (dIdadeMes*(-1))
+ENDIF
+
+
+// 27/10/2023
+// 20/09/1996
+// __________
+// 07/01/27    27 anos 1 mes e 7 dias      -> ja esta correto
+
+
+
+
+
